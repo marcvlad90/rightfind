@@ -22,7 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.base.Function;
 
-public class AbstractBage extends PageObject {
+public class AbstractPage extends PageObject {
     public void customWait(final int seconds) {
         waitABit(seconds * 1000);
     }
