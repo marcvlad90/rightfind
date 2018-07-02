@@ -149,6 +149,7 @@ public class AbstractPage extends PageObject {
 
     public void waitForPageToLoadCompletely(final long timeOutInSeconds) {
         final ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
+
             @Override
             public Boolean apply(final WebDriver driver) {
                 return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
@@ -158,6 +159,17 @@ public class AbstractPage extends PageObject {
             new WebDriverWait(getDriver(), timeOutInSeconds).until(expectation);
         } catch (final TimeoutException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void waitForListToLoad(final List<WebElement> list, final int timeoutSeconds, final boolean assertListNotEmpty) {
+        int counter = 0;
+        while ((list.size() == 0) && (counter < timeoutSeconds)) {
+            waitABit(1000);
+            counter++;
+        }
+        if (assertListNotEmpty) {
+            Assert.assertTrue("List is empty", list.size() > 0);
         }
     }
 
