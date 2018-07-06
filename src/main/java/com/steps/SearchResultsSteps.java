@@ -9,6 +9,11 @@ public class SearchResultsSteps extends AbstractSteps {
     private SearchResultsPage searchResultsPage;
 
     @Step
+    public void loadAdditionalResultsIfExists() {
+        searchResultsPage.loadAdditionalResultsIfExists();
+    }
+
+    @Step
     public void checkThatPaginationNumbersAreCorrect(int numberOfItemsPerPage) {
         searchResultsPage.checkThatPaginationNumbersAreCorrect(numberOfItemsPerPage);
     }

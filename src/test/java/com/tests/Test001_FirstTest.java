@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 
 import com.steps.HomeSteps;
 import com.steps.SearchResultsSteps;
-import com.tools.constants.Constants;
 
 @RunWith(SerenityRunner.class)
 public class Test001_FirstTest extends BaseTest {
@@ -21,14 +20,13 @@ public class Test001_FirstTest extends BaseTest {
     public void test001_FirstTest() {
         homeSteps
                 .performSearch("European collaboration");
-        searchResultsSteps.selectNumberOfResultsPerPage(Constants.NUMBER_OF_RESULTS_PER_PAGE_10);
-        searchResultsSteps.checkThatPaginationNumbersAreCorrect(Constants.NUMBER_OF_RESULTS_PER_PAGE_10);
+        searchResultsSteps.loadAdditionalResultsIfExists();
+        //        searchResultsSteps.selectNumberOfResultsPerPage(Constants.NUMBER_OF_RESULTS_PER_PAGE_10);
+        //        searchResultsSteps.checkThatPaginationNumbersAreCorrect(Constants.NUMBER_OF_RESULTS_PER_PAGE_10);
         searchResultsSteps
                 .checkIfItemIsPresentInTheList(
-                        "Incomplete Infarction Trial of European Research Collaborators Evaluating Prognosis Post-Thrombolysis (INTERCEPT): a randomized comparison of diltiazem once daily and placebo following thrombolysis-treated myocardial infarction.",
+                        "Periprocedural anticoagulation during left atrial ablation: interrupted and uninterrupted vitamin K-antagonists or uninterrupted novel anticoagulants",
                         true);
-        searchResultsSteps.checkIfItemIsPresentInTheList(
-                "vlad marc", false);
         //            searchResultsSteps.checkThatPaginationNumbersAreCorrect(20);
         //            searchResultsSteps.selectNumberOfResultsPerPage(10);
         //            searchResultsSteps.checkThatPaginationNumbersAreCorrect(10);

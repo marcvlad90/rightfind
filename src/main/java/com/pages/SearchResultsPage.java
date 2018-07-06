@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.tools.constants.Constants;
 import com.tools.utils.StringUtils;
 
 public class SearchResultsPage extends AbstractPage {
@@ -17,8 +16,17 @@ public class SearchResultsPage extends AbstractPage {
     private WebElement numberOfResultsPerPageElement;
     @FindBy(css = "span[class*='__pagination'] i[class='fa fa-fas fa-angle-right']")
     private WebElement nextPageNavigationElement;
+    @FindBy(css = "div[class*='info ember-view'] button:nth-child(2)")
+    private WebElement addiionalResultsAddButton;
     private final String resultsItemsListCssSelector = "div[class*='results-page__results-list ']>ul>li";
     private final String resultTitleCssSelector = "div[class*='__title']>a>span:nth-child(1)";
+
+    public void loadAdditionalResultsIfExists() {
+        if (getSearchResultsNumber() < 2000) {
+            waitForTextToAppear("There are additional results available - please add them to see the complete list of results and update the filters and the content insights");
+            clickOnButtonIfExists(addiionalResultsAddButton);
+        }
+    }
 
     public void selectNumberOfResultsPerPage(int numberOfResults) {
         element(numberOfResultsPerPageElement).waitUntilVisible();
@@ -29,18 +37,20 @@ public class SearchResultsPage extends AbstractPage {
     public WebElement getResultItemIfExists(String resultItemTitle) {
         List<WebElement> resultsItems = getDriver().findElements(By.cssSelector(resultsItemsListCssSelector));
         for (WebElement resultItem : resultsItems) {
-            customWait(3);
             if (resultItem.findElement(By.cssSelector(resultTitleCssSelector)).getText().contentEquals(resultItemTitle)) {
-                System.out.println(resultItem.findElement(By.cssSelector(resultTitleCssSelector)).getText());
                 return resultItem;
             }
         }
         return null;
     }
 
-    //TODO refine it when the loading results appears
+    public void navigateToNextPage() {
+        int currentPageNumber = getCurrentPageNumber();
+        nextPageNavigationElement.click();
+        waitForTextToAppear("Page " + String.valueOf(currentPageNumber + 1) + " of " + String.valueOf(getNumberOfPages()));
+    }
+
     public void checkIfItemIsPresentInTheList(String resultItemTitle, boolean shouldBePresent) {
-        selectNumberOfResultsPerPage(Constants.NUMBER_OF_RESULTS_PER_PAGE_10);
         int numberOfPages = getNumberOfPages();
         boolean isFound = false;
         for (int i = 1; i <= numberOfPages; i++) {
@@ -49,8 +59,7 @@ public class SearchResultsPage extends AbstractPage {
                 break;
             }
             else {
-                nextPageNavigationElement.click();
-                customWait(1);
+                navigateToNextPage();
             }
         }
         if (shouldBePresent) {
