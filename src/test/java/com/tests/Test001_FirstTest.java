@@ -19,16 +19,9 @@ public class Test001_FirstTest extends BaseTest {
     @Test
     public void test001_FirstTest() {
         homeSteps
-                .performSearch("European collaboration");
+                .performSearch("Pathology of familial breast cancer differences between breast cancers in carriers of BRCA1 or BRCA2 mutations and sporadic cases");
         searchResultsSteps.loadAdditionalResultsIfExists();
-        //        searchResultsSteps.selectNumberOfResultsPerPage(Constants.NUMBER_OF_RESULTS_PER_PAGE_10);
-        //        searchResultsSteps.checkThatPaginationNumbersAreCorrect(Constants.NUMBER_OF_RESULTS_PER_PAGE_10);
         searchResultsSteps
-                .checkIfItemIsPresentInTheList(
-                        "Periprocedural anticoagulation during left atrial ablation: interrupted and uninterrupted vitamin K-antagonists or uninterrupted novel anticoagulants",
-                        true);
-        //            searchResultsSteps.checkThatPaginationNumbersAreCorrect(20);
-        //            searchResultsSteps.selectNumberOfResultsPerPage(10);
-        //            searchResultsSteps.checkThatPaginationNumbersAreCorrect(10);
+                .checkThatItemIsPresentInTheList("Overall survival and clinical characteristics of BRCA mutation carriers with stage I/II pancreatic cancer");
     }
 }

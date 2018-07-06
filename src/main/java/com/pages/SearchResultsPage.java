@@ -22,9 +22,10 @@ public class SearchResultsPage extends AbstractPage {
     private final String resultTitleCssSelector = "div[class*='__title']>a>span:nth-child(1)";
 
     public void loadAdditionalResultsIfExists() {
-        if (getSearchResultsNumber() < 2000) {
+        try {
             waitForTextToAppear("There are additional results available - please add them to see the complete list of results and update the filters and the content insights");
             clickOnButtonIfExists(addiionalResultsAddButton);
+        } catch (Exception e) {
         }
     }
 
@@ -45,12 +46,12 @@ public class SearchResultsPage extends AbstractPage {
     }
 
     public void navigateToNextPage() {
-        int currentPageNumber = getCurrentPageNumber();
+        WebElement firstResultFromCurrentPage = getDriver().findElements(By.cssSelector("div[class*='results-page__results-list ']>ul>li")).get(0);
         nextPageNavigationElement.click();
-        waitForTextToAppear("Page " + String.valueOf(currentPageNumber + 1) + " of " + String.valueOf(getNumberOfPages()));
+        waitUntilElementDoesntExist(firstResultFromCurrentPage, 5);
     }
 
-    public void checkIfItemIsPresentInTheList(String resultItemTitle, boolean shouldBePresent) {
+    public void checkThatItemIsPresentInTheList(String resultItemTitle) {
         int numberOfPages = getNumberOfPages();
         boolean isFound = false;
         for (int i = 1; i <= numberOfPages; i++) {
@@ -62,12 +63,7 @@ public class SearchResultsPage extends AbstractPage {
                 navigateToNextPage();
             }
         }
-        if (shouldBePresent) {
-            Assert.assertTrue("\"" + resultItemTitle + "\"" + " item was not found!", isFound);
-        }
-        else {
-            Assert.assertFalse("\"" + resultItemTitle + "\"" + " item was found!", isFound);
-        }
+        Assert.assertTrue("\"" + resultItemTitle + "\"" + " item was not found!", isFound);
     }
 
     public Integer getSearchResultsNumber() {

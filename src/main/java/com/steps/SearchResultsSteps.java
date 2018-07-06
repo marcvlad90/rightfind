@@ -24,7 +24,7 @@ public class SearchResultsSteps extends AbstractSteps {
     }
 
     @Step
-    public void checkIfItemIsPresentInTheList(String resultItemTitle, boolean shouldBePresent) {
-        searchResultsPage.checkIfItemIsPresentInTheList(resultItemTitle, shouldBePresent);
+    public void checkThatItemIsPresentInTheList(String resultItemTitle) {
+        searchResultsPage.checkThatItemIsPresentInTheList(resultItemTitle);
     }
 }

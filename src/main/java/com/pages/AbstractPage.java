@@ -117,6 +117,20 @@ public class AbstractPage extends PageObject {
         }
     }
 
+    public void waitUntilElementDoesntExist(final WebElement element, final int noOfSeconds) {
+        @SuppressWarnings("unused")
+        boolean elementPresent = false;
+        for (int i = 0; i < noOfSeconds; i++) {
+            customWait(1);
+            try {
+                elementPresent = element.isDisplayed();
+            } catch (final Exception e) {
+                elementPresent = false;
+                break;
+            }
+        }
+    }
+
     public boolean clickOnButtonIfExists(final WebElement element) {
         try {
             element.click();
