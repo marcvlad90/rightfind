@@ -39,16 +39,6 @@ public class AbstractPage extends PageObject {
         evaluateJavascript("window.scrollTo(0,document.body.scrollHeight);");
     }
 
-    public void checkThatElementDoesntExist(final WebElement element) {
-        boolean elementPresent = false;
-        try {
-            elementPresent = element.isDisplayed();
-        } catch (final Exception e) {
-            elementPresent = false;
-        }
-        Assert.assertFalse("The element should not be present!", elementPresent);
-    }
-
     public WebElement findAndWaitForElementToBePresent(final WebElement element, final int timeoutSeconds) {
         final Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver()).withTimeout(timeoutSeconds, TimeUnit.SECONDS)
                 .pollingEvery(1, TimeUnit.SECONDS)

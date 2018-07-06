@@ -21,5 +21,6 @@ public class HomePage extends AbstractPage {
     public void clickOnSearchIcon() {
         element(searchIcon).waitUntilVisible();
         searchIcon.click();
+        waitForTextToAppear("Page 1 of");
     }
 }

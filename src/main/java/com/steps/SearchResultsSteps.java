@@ -14,7 +14,12 @@ public class SearchResultsSteps extends AbstractSteps {
     }
 
     @Step
-    public void selectNumberOfResultsPerPage(String numberOfResults) {
+    public void selectNumberOfResultsPerPage(int numberOfResults) {
         searchResultsPage.selectNumberOfResultsPerPage(numberOfResults);
+    }
+
+    @Step
+    public void checkIfItemIsPresentInTheList(String resultItemTitle, boolean shouldBePresent) {
+        searchResultsPage.checkIfItemIsPresentInTheList(resultItemTitle, shouldBePresent);
     }
 }
