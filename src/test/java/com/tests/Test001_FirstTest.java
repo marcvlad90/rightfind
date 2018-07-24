@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 
 import com.steps.HomeSteps;
 import com.steps.SearchResultsSteps;
+import com.tools.constants.Constants;
 
 @RunWith(SerenityRunner.class)
 public class Test001_FirstTest extends BaseTest {
@@ -19,9 +20,10 @@ public class Test001_FirstTest extends BaseTest {
     @Test
     public void test001_FirstTest() {
         homeSteps
-                .performSearch("Pathology of familial breast cancer differences between breast cancers in carriers of BRCA1 or BRCA2 mutations and sporadic cases");
+        .performSearch("Pathology of familial breast cancer differences between breast cancers in carriers of BRCA1 or BRCA2 mutations and sporadic cases");
         searchResultsSteps.loadAdditionalResultsIfExists();
+        searchResultsSteps.checkThatPaginationNumbersAreCorrect(Constants.NUMBER_OF_RESULTS_PER_PAGE_25);
         searchResultsSteps
-                .checkThatItemIsPresentInTheList("Overall survival and clinical characteristics of BRCA mutation carriers with stage I/II pancreatic cancer");
+        .checkThatItemIsPresentInTheList("Gene expression profiling in biopsied tumor tissues");
     }
 }

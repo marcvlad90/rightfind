@@ -11,15 +11,15 @@ import org.openqa.selenium.WebElement;
 import com.tools.utils.StringUtils;
 
 public class SearchResultsPage extends AbstractPage {
-    private final String paginationContainerCssSelector = "div[class*='__results-number']";
+    private final String paginationContainerCssSelector = ".result-page__center>div:nth-child(1)";
     @FindBy(css = "span[class*='__results-per-page'] .ember-view")
     private WebElement numberOfResultsPerPageElement;
-    @FindBy(css = "span[class*='__pagination'] i[class='fa fa-fas fa-angle-right']")
+    @FindBy(css = "i[class='fa fa-fas fa-angle-right']")
     private WebElement nextPageNavigationElement;
     @FindBy(css = "div[class*='info ember-view'] button:nth-child(2)")
     private WebElement addiionalResultsAddButton;
-    private final String resultsItemsListCssSelector = "div[class*='results-page__results-list ']>ul>li";
-    private final String resultTitleCssSelector = "div[class*='__title']>a>span:nth-child(1)";
+    private final String resultsItemsListCssSelector = "div[class*='result-page__results-list ']>ul>li";
+    private final String resultTitleCssSelector = "div>div>a>span:nth-child(1)";
 
     public void loadAdditionalResultsIfExists() {
         try {
@@ -46,7 +46,7 @@ public class SearchResultsPage extends AbstractPage {
     }
 
     public void navigateToNextPage() {
-        WebElement firstResultFromCurrentPage = getDriver().findElements(By.cssSelector("div[class*='results-page__results-list ']>ul>li")).get(0);
+        WebElement firstResultFromCurrentPage = getDriver().findElements(By.cssSelector("div[class*='result-page__results-list']>ul>li")).get(0);
         nextPageNavigationElement.click();
         waitUntilElementDoesntExist(firstResultFromCurrentPage, 5);
     }
@@ -89,7 +89,7 @@ public class SearchResultsPage extends AbstractPage {
         else {
             expectedResultsNumber = (numberOfItemsPerPage * (numberOfPages - 1)) + modValue;
         }
-        Assert.assertTrue(String.format("The expected results number is %d not %d", expectedResultsNumber, searchResultsNumber),
+        Assert.assertTrue(String.format("The expected results number is %d not %d", searchResultsNumber, expectedResultsNumber),
                 searchResultsNumber == expectedResultsNumber);
     }
 
