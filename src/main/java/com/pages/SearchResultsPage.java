@@ -17,15 +17,43 @@ public class SearchResultsPage extends AbstractPage {
     @FindBy(css = "i[class='fa fa-fas fa-angle-right']")
     private WebElement nextPageNavigationElement;
     @FindBy(css = "div[class*='info ember-view'] button:nth-child(2)")
-    private WebElement addiionalResultsAddButton;
+    private WebElement addionalResultsAddButton;
+    @FindBy(css = "input[placeholder='Enter your query to search multiple data sources']")
+    private WebElement searchField;
+    @FindBy(css = "i[class='fa fa-lg fa-search']")
+    private WebElement searchIcon;
+    @FindBy(css = "div[class*='__left']>a>img")
+    private WebElement homeLogo;
     private final String resultsItemsListCssSelector = "div[class*='result-page__results-list ']>ul>li";
     private final String resultTitleCssSelector = "div>div>a>span:nth-child(1)";
+
+    public void clickOnHomeLogo() {
+        clickOnElementIfExists(homeLogo);
+    }
+
+    public void clickOnSearchIcon() {
+        element(searchIcon).waitUntilVisible();
+        String beforeUrl = getDriver().getCurrentUrl();
+        searchIcon.click();
+        do {
+            waitABit(1000);
+        } while (beforeUrl.contentEquals(getDriver().getCurrentUrl()));
+        waitForListToLoad(getDriver().findElements(By.cssSelector(resultsItemsListCssSelector)), 5, false);
+    }
+
+    public void insertSearchQuery(String searchQuery) {
+        element(searchField).waitUntilVisible();
+        searchField.click();
+        searchField.clear();
+        element(searchField).sendKeys(searchQuery);
+    }
 
     public void loadAdditionalResultsIfExists() {
         try {
             waitForTextToAppear("There are additional results available - please add them to see the complete list of results and update the filters and the content insights");
-            clickOnButtonIfExists(addiionalResultsAddButton);
+            clickOnElementIfExists(addionalResultsAddButton);
         } catch (Exception e) {
+            searchIcon.click();
         }
     }
 
@@ -54,7 +82,7 @@ public class SearchResultsPage extends AbstractPage {
     public void checkThatItemIsPresentInTheList(String resultItemTitle) {
         int numberOfPages = getNumberOfPages();
         boolean isFound = false;
-        for (int i = 1; i <= numberOfPages; i++) {
+        for (int i = 1; i < numberOfPages; i++) {
             if (getResultItemIfExists(resultItemTitle) != null) {
                 isFound = true;
                 break;

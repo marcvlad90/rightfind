@@ -131,7 +131,7 @@ public class AbstractPage extends PageObject {
         }
     }
 
-    public boolean clickOnButtonIfExists(final WebElement element) {
+    public boolean clickOnElementIfExists(final WebElement element) {
         try {
             element.click();
             return true;
