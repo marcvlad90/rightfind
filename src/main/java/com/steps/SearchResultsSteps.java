@@ -3,6 +3,8 @@ package com.steps;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.StepGroup;
 
+import org.junit.Assert;
+
 import com.pages.SearchResultsPage;
 
 public class SearchResultsSteps extends AbstractSteps {
@@ -35,13 +37,31 @@ public class SearchResultsSteps extends AbstractSteps {
     }
 
     @Step
+    public void checkThatPageDisplaysTheNumberOfResultsPerPage(int expectedNumberOfResults) {
+        Assert.assertTrue(
+                String.format("There are %d results displayed instead of %d", searchResultsPage.getTheNumberOfResultsPerCurrentPage(), expectedNumberOfResults),
+                searchResultsPage.getTheNumberOfResultsPerCurrentPage() == expectedNumberOfResults);
+    }
+
+    @Step
     public void selectNumberOfResultsPerPage(int numberOfResults) {
         searchResultsPage.selectNumberOfResultsPerPage(numberOfResults);
     }
 
     @Step
+    public void selectTheNumberOfResultsPerPage(int numberOfResultsPerPage) {
+        searchResultsPage.selectTheNumberOfResultsPerPage(numberOfResultsPerPage);
+    }
+
+    @Step
     public void checkThatItemIsPresentInTheList(String resultItemTitle) {
         searchResultsPage.checkThatItemIsPresentInTheList(resultItemTitle);
+    }
+
+    @StepGroup
+    public void performSearch(String searchQuery) {
+        insertSearchQuery(searchQuery);
+        clickOnSearchIcon();
     }
 
     private String searchQuery, resultItemTitle;
@@ -50,7 +70,6 @@ public class SearchResultsSteps extends AbstractSteps {
     public void searchAndFindTheResult() {
         insertSearchQuery(searchQuery);
         clickOnSearchIcon();
-        loadAdditionalResultsIfExists();
         checkThatItemIsPresentInTheList(resultItemTitle);
     }
 }

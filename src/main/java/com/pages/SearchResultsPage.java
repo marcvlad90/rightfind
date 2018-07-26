@@ -24,8 +24,31 @@ public class SearchResultsPage extends AbstractPage {
     private WebElement searchIcon;
     @FindBy(css = "div[class*='__left']>a>img")
     private WebElement homeLogo;
+    @FindBy(css = "div[class*='cdd ember-view']")
+    private WebElement footerElement;
+    @FindBy(css = "div[class*='__controls']>div:nth-child(1) div[class*='c-select__trigger']")
+    private WebElement numberOfResultsExpanderButton;
     private final String resultsItemsListCssSelector = "div[class*='result-page__results-list ']>ul>li";
     private final String resultTitleCssSelector = "div>div>a>span:nth-child(1)";
+    private final String displayedControlValuesListCssSelector = "ul[class$='__options'] li";
+
+    public int getTheNumberOfResultsPerCurrentPage() {
+        return getDriver().findElements(By.cssSelector(resultsItemsListCssSelector)).size();
+    }
+
+    public void selectTheNumberOfResultsPerPage(int numberOfResultsPerPage) {
+        footerElement.click();
+        element(numberOfResultsExpanderButton).waitUntilVisible();
+        numberOfResultsExpanderButton.click();
+        customWait(3);
+        List<WebElement> numberOfResultsPerPageList = getDriver().findElements(By.cssSelector(displayedControlValuesListCssSelector));
+        for (WebElement numberOfResultsPerPageItem : numberOfResultsPerPageList) {
+            if (Integer.parseInt(numberOfResultsPerPageItem.getText()) == numberOfResultsPerPage) {
+                numberOfResultsPerPageItem.click();
+                break;
+            }
+        }
+    }
 
     public void clickOnHomeLogo() {
         clickOnElementIfExists(homeLogo);
@@ -35,9 +58,13 @@ public class SearchResultsPage extends AbstractPage {
         element(searchIcon).waitUntilVisible();
         String beforeUrl = getDriver().getCurrentUrl();
         searchIcon.click();
-        do {
+        for (int i = 0; i < 10; i++) {
+            if (!beforeUrl.contentEquals(getDriver().getCurrentUrl())) {
+                break;
+            }
             waitABit(1000);
-        } while (beforeUrl.contentEquals(getDriver().getCurrentUrl()));
+        }
+        footerElement.click();
         waitForListToLoad(getDriver().findElements(By.cssSelector(resultsItemsListCssSelector)), 5, false);
     }
 
@@ -75,7 +102,12 @@ public class SearchResultsPage extends AbstractPage {
 
     public void navigateToNextPage() {
         WebElement firstResultFromCurrentPage = getDriver().findElements(By.cssSelector("div[class*='result-page__results-list']>ul>li")).get(0);
-        nextPageNavigationElement.click();
+        try {
+            nextPageNavigationElement.click();
+        } catch (Exception e) {
+            getDriver().navigate().refresh();
+            nextPageNavigationElement.click();
+        }
         waitUntilElementDoesntExist(firstResultFromCurrentPage, 5);
     }
 
@@ -103,6 +135,7 @@ public class SearchResultsPage extends AbstractPage {
     }
 
     public Integer getNumberOfPages() {
+        loadAdditionalResultsIfExists();
         return StringUtils.getFirstIntegerNumberAfterKeyFromString(getDriver().findElement(By.cssSelector(paginationContainerCssSelector)).getText(), "of ");
     }
 
