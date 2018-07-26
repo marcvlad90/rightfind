@@ -22,7 +22,7 @@ public class SearchResultsPage extends AbstractPage {
     private WebElement searchField;
     @FindBy(css = "i[class='fa fa-lg fa-search']")
     private WebElement searchIcon;
-    @FindBy(css = "div[class*='__left']>a>img")
+    @FindBy(css = "div[class*='result-page result-page'] div[class*='__left']>a>img")
     private WebElement homeLogo;
     @FindBy(css = "div[class*='cdd ember-view']")
     private WebElement footerElement;
@@ -114,7 +114,7 @@ public class SearchResultsPage extends AbstractPage {
     public void checkThatItemIsPresentInTheList(String resultItemTitle) {
         int numberOfPages = getNumberOfPages();
         boolean isFound = false;
-        for (int i = 1; i < numberOfPages; i++) {
+        for (int i = 1; i <= numberOfPages; i++) {
             if (getResultItemIfExists(resultItemTitle) != null) {
                 isFound = true;
                 break;
@@ -137,6 +137,7 @@ public class SearchResultsPage extends AbstractPage {
     public Integer getNumberOfPages() {
         loadAdditionalResultsIfExists();
         return StringUtils.getFirstIntegerNumberAfterKeyFromString(getDriver().findElement(By.cssSelector(paginationContainerCssSelector)).getText(), "of ");
+
     }
 
     public void checkThatPaginationNumbersAreCorrect(int numberOfItemsPerPage) {
