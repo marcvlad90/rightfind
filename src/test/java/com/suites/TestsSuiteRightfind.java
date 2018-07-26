@@ -9,11 +9,8 @@ import com.tests.Test002_PaginationAndResultsNumber;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-    Test001_SearchForItem.class,
-    Test001_SearchForItem.class, Test001_SearchForItem.class,
-    Test001_SearchForItem.class, Test001_SearchForItem.class, Test001_SearchForItem.class, Test001_SearchForItem.class, Test001_SearchForItem.class,
-    Test001_SearchForItem.class, Test001_SearchForItem.class, Test001_SearchForItem.class,
-    Test002_PaginationAndResultsNumber.class,
+        Test001_SearchForItem.class,
+        Test002_PaginationAndResultsNumber.class,
 })
 public class TestsSuiteRightfind {
 
