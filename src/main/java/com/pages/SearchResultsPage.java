@@ -62,9 +62,10 @@ public class SearchResultsPage extends AbstractPage {
             if (!beforeUrl.contentEquals(getDriver().getCurrentUrl())) {
                 break;
             }
+            footerElement.click();
+            searchIcon.click();
             waitABit(1000);
         }
-        footerElement.click();
         waitForListToLoad(getDriver().findElements(By.cssSelector(resultsItemsListCssSelector)), 5, false);
     }
 

@@ -15,14 +15,14 @@ import com.steps.SearchResultsSteps;
 import com.tools.constants.Constants;
 
 @RunWith(SerenityRunner.class)
-public class Test001_SearchForItem extends BaseTest {
+public class Test001_SearchForItems extends BaseTest {
     @Steps
     private HomeSteps homeSteps;
     @Steps
     private SearchResultsSteps searchResultsSteps;
 
     @Test
-    public void test001_FirstTest() throws IOException {
-        withTestDataFrom(Constants.CSV_FILES_PATH + "Test001_SearchForItem.csv").run(searchResultsSteps).searchAndFindTheResult();
+    public void test001_SearchForItems() throws IOException {
+        withTestDataFrom(Constants.CSV_FILES_PATH + "Test001_SearchForItems.csv").run(searchResultsSteps).searchAndFindTheResult();
     }
 }

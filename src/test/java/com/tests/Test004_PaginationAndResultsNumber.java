@@ -11,7 +11,7 @@ import com.steps.SearchResultsSteps;
 import com.tools.constants.Constants;
 
 @RunWith(SerenityRunner.class)
-public class Test002_PaginationAndResultsNumber extends BaseTest {
+public class Test004_PaginationAndResultsNumber extends BaseTest {
     @Steps
     private HomeSteps homeSteps;
     @Steps
@@ -19,7 +19,7 @@ public class Test002_PaginationAndResultsNumber extends BaseTest {
     private String searchQuery = "cancer treatment";
 
     @Test
-    public void test002_PaginationAndResultsNumber() {
+    public void test004_PaginationAndResultsNumber() {
         homeSteps.performSearch(searchQuery);
         searchResultsSteps.loadAdditionalResultsIfExists();
         searchResultsSteps.selectTheNumberOfResultsPerPage(Constants.NUMBER_OF_RESULTS_PER_PAGE_25);

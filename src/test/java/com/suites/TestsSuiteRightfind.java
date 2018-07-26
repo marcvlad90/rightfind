@@ -4,13 +4,18 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.tests.Test001_SearchForItem;
-import com.tests.Test002_PaginationAndResultsNumber;
+import com.tests.Test001_SearchForItems;
+import com.tests.Test002_DirectSearchForItems;
+import com.tests.Test003_BooleanLogicOnSearch;
+import com.tests.Test004_PaginationAndResultsNumber;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-        Test001_SearchForItem.class,
-        Test002_PaginationAndResultsNumber.class,
+        Test001_SearchForItems.class,
+        Test002_DirectSearchForItems.class,
+        Test003_BooleanLogicOnSearch.class,
+        Test004_PaginationAndResultsNumber.class,
+
 })
 public class TestsSuiteRightfind {
 
