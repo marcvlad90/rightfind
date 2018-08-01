@@ -1,5 +1,6 @@
 package com.pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
@@ -98,6 +99,24 @@ public class SearchResultsPage extends AbstractPage {
         element(numberOfResultsPerPageElement).waitUntilVisible();
         element(numberOfResultsPerPageElement).click();
         numberOfResultsPerPageElement.findElement(By.xpath("//li[text() = '" + String.valueOf(numberOfResults) + "']")).click();
+    }
+
+    public WebElement[] getAllTheResultsFromTheTheFirstPages(int numberOfPagesToCheck) {
+        List<WebElement> resultsList = new ArrayList<WebElement>();
+        int numberOfPages = getNumberOfPages();
+        for (int i = 1; (i <= numberOfPages) && (i <= numberOfPagesToCheck); i++) {
+            List<WebElement> currentPageItemsList = getDriver().findElements(By.cssSelector(resultTitleCssSelector));
+            for (WebElement currentItem : currentPageItemsList) {
+                System.out.println("current item is:" + currentItem.getText());
+                resultsList.add(currentItem);
+                System.out.println("size nou is:" + resultsList.size());
+            }
+            if (getCurrentPageNumber() < numberOfPages) {
+                navigateToNextPage();
+                waitForTextToAppear("Page " + (i + 1) + " of");
+            }
+        }
+        return null;
     }
 
     public WebElement getResultItemIfExists(String resultItemTitle) {
