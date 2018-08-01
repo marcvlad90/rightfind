@@ -14,7 +14,7 @@ public class SearchResultsPage extends AbstractPage {
     private final String paginationContainerCssSelector = ".result-page__center>div:nth-child(1)";
     @FindBy(css = "span[class*='__results-per-page'] .ember-view")
     private WebElement numberOfResultsPerPageElement;
-    @FindBy(css = "i[class='fa fa-fas fa-angle-right']")
+    @FindBy(css = "div[class*='__options'] i[class*='fa-angle-right']")
     private WebElement nextPageNavigationElement;
     @FindBy(css = "div[class*='info ember-view'] button:nth-child(2)")
     private WebElement addionalResultsAddButton;

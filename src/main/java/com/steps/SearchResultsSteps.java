@@ -68,6 +68,7 @@ public class SearchResultsSteps extends AbstractSteps {
 
     @StepGroup
     public void searchAndFindTheResult() {
+        System.out.println("Search query is:" + searchQuery);
         insertSearchQuery(searchQuery);
         clickOnSearchIcon();
         checkThatItemIsPresentInTheList(resultItemTitle);
