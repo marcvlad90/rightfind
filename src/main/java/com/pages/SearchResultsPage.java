@@ -28,26 +28,35 @@ public class SearchResultsPage extends AbstractPage {
     private WebElement footerElement;
     @FindBy(css = "div[class*='__controls']>div:nth-child(1) div[class*='c-select__trigger']")
     private WebElement numberOfResultsExpanderButton;
+    @FindBy(css = "div[class*='__controls']>div:nth-child(2) div[class*='c-select__trigger']")
+    private WebElement sortByExpanderButton;
     private final String resultsItemsListCssSelector = "div[class*='result-page__results-list ']>ul>li";
     private final String resultTitleCssSelector = "div>div>a>span:nth-child(1)";
     private final String displayedControlValuesListCssSelector = "ul[class$='__options'] li";
+
+    public void selectTheControlValue(WebElement controllerWebElement, String optionValue) {
+        footerElement.click();
+        element(controllerWebElement).waitUntilVisible();
+        controllerWebElement.click();
+        List<WebElement> optionsList = getDriver().findElements(By.cssSelector(displayedControlValuesListCssSelector));
+        for (WebElement optionItem : optionsList) {
+            if (optionItem.getText().contentEquals(optionValue)) {
+                optionItem.click();
+                break;
+            }
+        }
+    }
+
+    public void sortResults(String sortingRule) {
+        selectTheControlValue(sortByExpanderButton, sortingRule);
+    }
 
     public int getTheNumberOfResultsPerCurrentPage() {
         return getDriver().findElements(By.cssSelector(resultsItemsListCssSelector)).size();
     }
 
     public void selectTheNumberOfResultsPerPage(int numberOfResultsPerPage) {
-        footerElement.click();
-        element(numberOfResultsExpanderButton).waitUntilVisible();
-        numberOfResultsExpanderButton.click();
-        customWait(3);
-        List<WebElement> numberOfResultsPerPageList = getDriver().findElements(By.cssSelector(displayedControlValuesListCssSelector));
-        for (WebElement numberOfResultsPerPageItem : numberOfResultsPerPageList) {
-            if (Integer.parseInt(numberOfResultsPerPageItem.getText()) == numberOfResultsPerPage) {
-                numberOfResultsPerPageItem.click();
-                break;
-            }
-        }
+        selectTheControlValue(numberOfResultsExpanderButton, String.valueOf(numberOfResultsPerPage));
     }
 
     public void clickOnHomeLogo() {

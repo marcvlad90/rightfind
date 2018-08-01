@@ -16,11 +16,10 @@ public class Test004_PaginationAndResultsNumber extends BaseTest {
     private HomeSteps homeSteps;
     @Steps
     private SearchResultsSteps searchResultsSteps;
-    private String searchQuery = "cancer treatment";
 
     @Test
     public void test004_PaginationAndResultsNumber() {
-        homeSteps.performSearch(searchQuery);
+        homeSteps.performSearch(Constants.NUMBER_OF_RESULTS_QUERY_MAX);
         searchResultsSteps.loadAdditionalResultsIfExists();
         searchResultsSteps.selectTheNumberOfResultsPerPage(Constants.NUMBER_OF_RESULTS_PER_PAGE_25);
         searchResultsSteps.checkThatPaginationNumbersAreCorrect(Constants.NUMBER_OF_RESULTS_PER_PAGE_25);

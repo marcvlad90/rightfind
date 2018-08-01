@@ -49,6 +49,11 @@ public class SearchResultsSteps extends AbstractSteps {
     }
 
     @Step
+    public void sortResults(String sortingRule) {
+        searchResultsPage.sortResults(sortingRule);
+    }
+
+    @Step
     public void selectTheNumberOfResultsPerPage(int numberOfResultsPerPage) {
         searchResultsPage.selectTheNumberOfResultsPerPage(numberOfResultsPerPage);
     }
@@ -68,7 +73,6 @@ public class SearchResultsSteps extends AbstractSteps {
 
     @StepGroup
     public void searchAndFindTheResult() {
-        System.out.println("Search query is:" + searchQuery);
         insertSearchQuery(searchQuery);
         clickOnSearchIcon();
         checkThatItemIsPresentInTheList(resultItemTitle);
