@@ -68,13 +68,11 @@ public class SearchResultsPage extends AbstractPage {
         element(searchIcon).waitUntilVisible();
         String beforeUrl = getDriver().getCurrentUrl();
         searchIcon.click();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
+            waitABit(1000);
             if (!beforeUrl.contentEquals(getDriver().getCurrentUrl())) {
                 break;
             }
-            footerElement.click();
-            searchIcon.click();
-            waitABit(1000);
         }
         waitForListToLoad(getDriver().findElements(By.cssSelector(resultsItemsListCssSelector)), 5, false);
     }
@@ -91,7 +89,7 @@ public class SearchResultsPage extends AbstractPage {
             waitForTextToAppear("There are additional results available - please add them to see the complete list of results and update the filters and the content insights");
             clickOnElementIfExists(addionalResultsAddButton);
         } catch (Exception e) {
-            searchIcon.click();
+
         }
     }
 
@@ -101,22 +99,35 @@ public class SearchResultsPage extends AbstractPage {
         numberOfResultsPerPageElement.findElement(By.xpath("//li[text() = '" + String.valueOf(numberOfResults) + "']")).click();
     }
 
-    public WebElement[] getAllTheResultsFromTheTheFirstPages(int numberOfPagesToCheck) {
-        List<WebElement> resultsList = new ArrayList<WebElement>();
+    public List<String> getTheStringListOfTheResultsFromTheFirstPages(int numberOfPagesToSearchIn, String partOfListItemCssSelector) {
+        List<String> resultsList = new ArrayList<String>();
         int numberOfPages = getNumberOfPages();
-        for (int i = 1; (i <= numberOfPages) && (i <= numberOfPagesToCheck); i++) {
-            List<WebElement> currentPageItemsList = getDriver().findElements(By.cssSelector(resultTitleCssSelector));
+        for (int i = 1; (i <= numberOfPages) && (i <= numberOfPagesToSearchIn); i++) {
+            List<WebElement> currentPageItemsList = getDriver().findElements(
+                    By.cssSelector(partOfListItemCssSelector));
             for (WebElement currentItem : currentPageItemsList) {
-                System.out.println("current item is:" + currentItem.getText());
-                resultsList.add(currentItem);
-                System.out.println("size nou is:" + resultsList.size());
+                resultsList.add(currentItem.getText());
             }
             if (getCurrentPageNumber() < numberOfPages) {
                 navigateToNextPage();
                 waitForTextToAppear("Page " + (i + 1) + " of");
             }
         }
-        return null;
+        return resultsList;
+    }
+
+    public List<String> getTitlesFromTheFirstPagesResults(int numberOfPagesToSearchIn) {
+        return getTheStringListOfTheResultsFromTheFirstPages(numberOfPagesToSearchIn, resultTitleCssSelector);
+    }
+
+    public void checkThatTheListIsAlphabeticallyAscendingOrdered(int numberOfPagesToSearchIn) {
+        List<String> resultsList = getTitlesFromTheFirstPagesResults(numberOfPagesToSearchIn);
+        StringUtils.checkThatTheListIsAlphabeticallyAscendingOrdered(resultsList);
+    }
+
+    public void checkThatTheListIsAlphabeticallyDescendingOrdered(int numberOfPagesToSearchIn) {
+        List<String> resultsList = getTitlesFromTheFirstPagesResults(numberOfPagesToSearchIn);
+        StringUtils.checkThatTheListIsAlphabeticallyDescendingOrdered(resultsList);
     }
 
     public WebElement getResultItemIfExists(String resultItemTitle) {
@@ -134,7 +145,7 @@ public class SearchResultsPage extends AbstractPage {
         try {
             nextPageNavigationElement.click();
         } catch (Exception e) {
-            getDriver().navigate().refresh();
+            footerElement.click();
             nextPageNavigationElement.click();
         }
         waitUntilElementDoesntExist(firstResultFromCurrentPage, 5);

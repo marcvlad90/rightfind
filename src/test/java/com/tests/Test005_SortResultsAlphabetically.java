@@ -5,7 +5,6 @@ import net.thucydides.core.annotations.Steps;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.WebElement;
 
 import com.steps.HomeSteps;
 import com.steps.SearchResultsSteps;
@@ -22,6 +21,9 @@ public class Test005_SortResultsAlphabetically extends BaseTest {
     public void test005_SortResultsAlphabetically() {
         homeSteps.performSearch(Constants.NUMBER_OF_RESULTS_QUERY_FEW);
         searchResultsSteps.sortResults(Constants.SORT_ALPHABETICALLY_ASCENDENT);
-        WebElement[] list = searchResultsSteps.getAllTheResultsFromTheTheFirstPages(8);
+        searchResultsSteps.checkThatTheListIsAlphabeticallyAscendingOrdered(10);
+        homeSteps.performSearch(Constants.NUMBER_OF_RESULTS_QUERY_FEW);
+        searchResultsSteps.sortResults(Constants.SORT_ALPHABETICALLY_DESCENDENT);
+        searchResultsSteps.checkThatTheListIsAlphabeticallyDescendingOrdered(10);
     }
 }

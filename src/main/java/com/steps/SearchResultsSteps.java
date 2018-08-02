@@ -4,7 +4,6 @@ import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.StepGroup;
 
 import org.junit.Assert;
-import org.openqa.selenium.WebElement;
 
 import com.pages.SearchResultsPage;
 
@@ -55,8 +54,13 @@ public class SearchResultsSteps extends AbstractSteps {
     }
 
     @Step
-    public WebElement[] getAllTheResultsFromTheTheFirstPages(int numberOfPagesToCheck) {
-        return searchResultsPage.getAllTheResultsFromTheTheFirstPages(numberOfPagesToCheck);
+    public void checkThatTheListIsAlphabeticallyAscendingOrdered(int numberOfPagesToSearchIn) {
+        searchResultsPage.checkThatTheListIsAlphabeticallyAscendingOrdered(numberOfPagesToSearchIn);
+    }
+
+    @Step
+    public void checkThatTheListIsAlphabeticallyDescendingOrdered(int numberOfPagesToSearchIn) {
+        searchResultsPage.checkThatTheListIsAlphabeticallyDescendingOrdered(numberOfPagesToSearchIn);
     }
 
     @Step

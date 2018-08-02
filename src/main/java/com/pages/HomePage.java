@@ -15,6 +15,7 @@ public class HomePage extends AbstractPage {
     public void insertSearchQuery(String searchQuery) {
         element(searchField).waitUntilVisible();
         searchField.click();
+        element(searchField).clear();
         element(searchField).sendKeys(searchQuery);
     }
 
