@@ -19,16 +19,18 @@ public class StringUtils {
                 }
             }
         }
-        Assert.assertTrue(
-                "No matching integer was found in the provided string!",
-                intNumber != "");
-        return Integer.valueOf(intNumber);
+        return Integer.valueOf(0 + intNumber);
     }
 
     public static Integer getFirstIntegerNumberAfterKeyFromString(String text,
             String key) {
-        text = text.substring(text.indexOf(key) + key.length());
-        return getFirstIntegerNumberFromString(text);
+        try {
+            text = text.substring(text.indexOf(key) + key.length());
+            return getFirstIntegerNumberFromString(text);
+        } catch (Exception e) {
+            return 0;
+        }
+
     }
 
     public static void checkThatTheListIsAlphabeticallyOrdered(List<String> itemsList, boolean isOrderedAscendingNotDescending) {
