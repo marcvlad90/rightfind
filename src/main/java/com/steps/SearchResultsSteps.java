@@ -54,6 +54,16 @@ public class SearchResultsSteps extends AbstractSteps {
     }
 
     @Step
+    public void checkThatTheListIsOrderedByOldest(int numberOfPagesToSearchIn) {
+        searchResultsPage.checkThatTheListIsOrderedByOldest(numberOfPagesToSearchIn);
+    }
+
+    @Step
+    public void checkThatTheListIsOrderedByLatest(int numberOfPagesToSearchIn) {
+        searchResultsPage.checkThatTheListIsOrderedByLatest(numberOfPagesToSearchIn);
+    }
+
+    @Step
     public void checkThatTheListIsAlphabeticallyAscendingOrdered(int numberOfPagesToSearchIn) {
         searchResultsPage.checkThatTheListIsAlphabeticallyAscendingOrdered(numberOfPagesToSearchIn);
     }

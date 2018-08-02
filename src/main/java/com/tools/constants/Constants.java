@@ -8,6 +8,8 @@ public class Constants {
     //sorting values
     public static final String SORT_ALPHABETICALLY_ASCENDENT = "Title A-Z";
     public static final String SORT_ALPHABETICALLY_DESCENDENT = "Title Z-A";
+    public static final String SORT_BY_YEAR_OLDEST = "Oldest";
+    public static final String SORT_BY_YEAR_LATEST = "Latest";
 
     //file paths
     public final static String CSV_FILES_PATH = "src/test/resources/csv/";

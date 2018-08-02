@@ -33,6 +33,7 @@ public class SearchResultsPage extends AbstractPage {
     private WebElement sortByExpanderButton;
     private final String resultsItemsListCssSelector = "div[class*='result-page__results-list ']>ul>li";
     private final String resultTitleCssSelector = "div>div>a>span:nth-child(1)";
+    private final String resultYearCssSelector = "div[class*='__content']>span:nth-child(2)";
     private final String displayedControlValuesListCssSelector = "ul[class$='__options'] li";
 
     public void selectTheControlValue(WebElement controllerWebElement, String optionValue) {
@@ -120,9 +121,23 @@ public class SearchResultsPage extends AbstractPage {
         return getTheStringListOfTheResultsFromTheFirstPages(numberOfPagesToSearchIn, resultTitleCssSelector);
     }
 
+    public List<String> getYearsFromTheFirstPagesResults(int numberOfPagesToSearchIn) {
+        return getTheStringListOfTheResultsFromTheFirstPages(numberOfPagesToSearchIn, resultYearCssSelector);
+    }
+
     public void checkThatTheListIsAlphabeticallyAscendingOrdered(int numberOfPagesToSearchIn) {
         List<String> resultsList = getTitlesFromTheFirstPagesResults(numberOfPagesToSearchIn);
         StringUtils.checkThatTheListIsAlphabeticallyAscendingOrdered(resultsList);
+    }
+
+    public void checkThatTheListIsOrderedByOldest(int numberOfPagesToSearchIn) {
+        List<String> resultsList = getYearsFromTheFirstPagesResults(numberOfPagesToSearchIn);
+        StringUtils.checkThatTheListIsAlphabeticallyAscendingOrdered(resultsList);
+    }
+
+    public void checkThatTheListIsOrderedByLatest(int numberOfPagesToSearchIn) {
+        List<String> resultsList = getYearsFromTheFirstPagesResults(numberOfPagesToSearchIn);
+        StringUtils.checkThatTheListIsAlphabeticallyDescendingOrdered(resultsList);
     }
 
     public void checkThatTheListIsAlphabeticallyDescendingOrdered(int numberOfPagesToSearchIn) {
