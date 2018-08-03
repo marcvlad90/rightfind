@@ -27,6 +27,7 @@ buildscript {
  
 task runTestsSuite(type: Test) {
     include '**/**TestsSuiteRightfind.class'
+    systemProperties System.properties
 }
 
 dependencies {
