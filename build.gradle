@@ -24,6 +24,10 @@ buildscript {
         classpath("net.serenity-bdd:serenity-gradle-plugin:1.1.1")     
     }
 }
+ 
+task runTestsSuite(type: Test) {
+    include '**/**TestsSuiteRightfind.class'
+}
 
 dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version:'1.7.7'
