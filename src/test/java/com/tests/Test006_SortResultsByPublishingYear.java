@@ -11,14 +11,14 @@ import com.steps.SearchResultsSteps;
 import com.tools.constants.Constants;
 
 @RunWith(SerenityRunner.class)
-public class Test06_SortResultsByPublishingYear extends BaseTest {
+public class Test006_SortResultsByPublishingYear extends BaseTest {
     @Steps
     private HomeSteps homeSteps;
     @Steps
     private SearchResultsSteps searchResultsSteps;
 
     @Test
-    public void sest06_SortResultsByPublishingYear() {
+    public void sest006_SortResultsByPublishingYear() {
         homeSteps.performSearch(Constants.NUMBER_OF_RESULTS_QUERY_FEW);
         searchResultsSteps.sortResults(Constants.SORT_BY_YEAR_OLDEST);
         searchResultsSteps.checkThatTheListIsOrderedByOldest(10);
