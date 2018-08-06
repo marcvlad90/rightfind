@@ -22,7 +22,7 @@ public class Test002_DirectSearchForItems extends BaseTest {
     private SearchResultsSteps searchResultsSteps;
 
     @Test
-    public void test001_SearchForItems() throws IOException {
+    public void test002_SearchForItems() throws IOException {
         withTestDataFrom(Constants.CSV_FILES_PATH + "Test002_DirectSearchForItems.csv").run(searchResultsSteps).searchAndFindTheResult();
     }
 }
